@@ -12,10 +12,11 @@ body {
   width: 18rem;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .display {
-  margin: 1.2rem 0 0 0;
   background-color: red;
   height: 100px;
   width: 90%;
@@ -24,5 +25,7 @@ body {
 
 .buttons {
   border: black solid 2px;
-  height: 100px;
+  margin: 0.9rem 0 0 0;
+  height: 20rem;
+  width: 90%;
 }
