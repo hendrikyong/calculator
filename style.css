@@ -6,14 +6,23 @@ body {
 }
 
 .calculator {
-  height: 75vh;
-  width: 18rem;
-  border-radius: 0.25rem;
   background-color: #292927;
+  border-radius: 0.25rem;
+  height: 30rem;
+  width: 18rem;
+  display: flex;
+  justify-content: center;
 }
 
-.calculator-screen {
-  border-radius: 0.25rem 0.25rem 0 0;
+.display {
+  margin: 1.2rem 0 0 0;
+  background-color: red;
   height: 100px;
-  background-color: #ff9500;
+  width: 90%;
+  border-radius: 2px;
+}
+
+.buttons {
+  border: black solid 2px;
+  height: 100px;
 }
