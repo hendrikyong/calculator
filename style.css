@@ -17,18 +17,21 @@ body {
 }
 
 .display {
-  background-color: red;
+  background-color: #007f00;
   height: 5rem;
   width: 88%;
   border-radius: 0.25rem;
-  margin: 1.2rem 0 0 0;
+  margin: 1.3rem 0 0 0;
+  display: flex;
+  justify-content: end;
+  align-items: end;
 }
 
 .buttons {
   height: 22rem;
   width: 90%;
   /* border: black solid 2px; */
-  margin: 0.8rem 0 0 0;
+  margin: 0.75rem 0 0 0;
 }
 
 .buttons-row1 {
@@ -39,6 +42,12 @@ body {
 .buttons-row1 button {
   height: 3.5rem;
   width: 3.5rem;
+}
+
+.buttons-row1 button:first-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttons-row2 {
@@ -82,5 +91,5 @@ body {
 }
 
 .buttons-row5 button:first-child {
-  width: 8rem;
+  width: 7.5rem;
 }
