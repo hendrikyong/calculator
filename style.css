@@ -8,7 +8,7 @@ body {
 .calculator {
   background-color: #292927;
   border-radius: 0.5rem;
-  height: 30rem;
+  height: 28rem;
   width: 18rem;
   display: flex;
   justify-content: center;
@@ -19,13 +19,68 @@ body {
 .display {
   background-color: red;
   height: 5rem;
-  width: 90%;
+  width: 88%;
   border-radius: 0.25rem;
+  margin: 1.2rem 0 0 0;
 }
 
 .buttons {
-  border: black solid 2px;
-  margin: 0.9rem 0 0 0;
   height: 22rem;
   width: 90%;
+  /* border: black solid 2px; */
+  margin: 0.8rem 0 0 0;
+}
+
+.buttons-row1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-row1 button {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+.buttons-row2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-row2 button {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+.buttons-row3 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-row3 button {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+.buttons-row4 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-row4 button {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+.buttons-row5 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-row5 button {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+.buttons-row5 button:first-child {
+  width: 8rem;
 }
