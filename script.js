@@ -26,8 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (text === "clear") {
           displayValue = "";
         } else if (text === "=") {
-          displayValue = eval(displayValue);
-          displayValue = Math.round(displayValue * 1e10) / 1e10;
+          let result = eval(displayValue);
+          if (result > 10000000) {
+            displayValue = result.toExponential();
+            display.style.justifyContent = "flex-end"; // Align to the end
+            display.style.alignItems = "flex-end"; // Align to the bottom
+          } else {
+            displayValue = Math.round(result * 1e10) / 1e10;
+            display.style.justifyContent = "flex-end"; // Align to the end
+            display.style.alignItems = "flex-end"; // Align to the bottom
+          }
         } else if (text === "√") {
           displayValue = Math.sqrt(Number(displayValue));
         } else if (text === "%") {

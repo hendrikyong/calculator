@@ -21,13 +21,14 @@ body {
 }
 
 .display {
+  overflow: hidden;
   background-color: #007f00;
   height: 5rem;
   width: 88%;
   border-radius: 0.25rem;
   margin: 1.3rem 0 0 0;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: start;
   font-family: "Anta", sans-serif;
   font-size: 2rem;
@@ -36,7 +37,6 @@ body {
 .buttons {
   height: 22rem;
   width: 90%;
-  /* border: black solid 2px; */
   margin: 0.75rem 0 0 0;
 }
 
