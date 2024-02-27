@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const buttonsContainer = document.querySelector(".buttons");
   let displayValue = "";
+  const display = document.getElementById("display");
 
   for (let i = 1; i < 6; i++) {
     const div = document.createElement("div");
@@ -9,11 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const items = [
-    ["clear", "%", "√", "/"], // Items for buttons-row1
-    ["7", "8", "9", "*"], // Items for buttons-row2
-    ["4", "5", "6", "-"], // Items for buttons-row3
-    ["1", "2", "3", "+"], // Items for buttons-row4
-    ["0", ".", "="], // Items for buttons-row5
+    ["clear", "%", "√", "/"],
+    ["7", "8", "9", "*"],
+    ["4", "5", "6", "-"],
+    ["1", "2", "3", "+"],
+    ["0", ".", "="],
   ];
 
   items.forEach((item, index) => {
@@ -25,16 +26,19 @@ document.addEventListener("DOMContentLoaded", function () {
       button.addEventListener("click", () => {
         if (text === "clear") {
           displayValue = "";
+          //to reset position when clear is clicked
+          display.style.justifyContent = "flex-start";
+          display.style.alignItems = "flex-start";
         } else if (text === "=") {
           let result = eval(displayValue);
           if (result > 10000000) {
             displayValue = result.toExponential();
-            display.style.justifyContent = "flex-end"; // Align to the end
-            display.style.alignItems = "flex-end"; // Align to the bottom
+            display.style.justifyContent = "flex-end";
+            display.style.alignItems = "flex-end";
           } else {
             displayValue = Math.round(result * 1e10) / 1e10;
-            display.style.justifyContent = "flex-end"; // Align to the end
-            display.style.alignItems = "flex-end"; // Align to the bottom
+            display.style.justifyContent = "flex-end";
+            display.style.alignItems = "flex-end";
           }
         } else if (text === "√") {
           displayValue = Math.sqrt(Number(displayValue));
@@ -44,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
           displayValue += text;
         }
         console.log(`${text} clicked`);
-        document.getElementById("display").innerHTML = displayValue;
+        display.innerHTML = displayValue;
       });
       div.appendChild(button);
     });
