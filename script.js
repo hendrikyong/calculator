@@ -43,9 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           displayResult = resultValue;
         } else if (text === "√") {
-          equation = `√(${displayEquation})`;
+          //here
+          equation = `Math.sqrt(${displayEquation})`;
           resultValue = Math.sqrt(Number(displayEquation));
         } else if (text === "%") {
+          //here
           equation = `(${displayEquation}) / 100`;
           resultValue = Number(displayEquation) / 100;
         } else {
