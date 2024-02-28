@@ -1,8 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const buttonsContainer = document.querySelector(".buttons");
-  let displayValue = "";
+  let displayEquation = ""; // Variable to store the equation
+  let displayResult = ""; // Variable to store the result
+  let equation = "";
+  let resultValue = ""; // Variable to store the calculated result
   const display = document.getElementById("display");
-
+  //create rows
   for (let i = 1; i < 6; i++) {
     const div = document.createElement("div");
     div.classList.add(`buttons-row${i}`);
@@ -20,35 +23,41 @@ document.addEventListener("DOMContentLoaded", function () {
   items.forEach((item, index) => {
     const div = document.querySelector(`.buttons-row${index + 1}`);
     item.forEach((text) => {
+      //create button
       const button = document.createElement("button");
       button.textContent = text;
       button.classList.add("btn", "btn-secondary", "m-1");
       button.addEventListener("click", () => {
         if (text === "clear") {
-          displayValue = "";
-          //to reset position when clear is clicked
-          display.style.justifyContent = "flex-start";
-          display.style.alignItems = "flex-start";
+          equation = "";
+          displayEquation = "";
+          displayResult = "";
+          resultValue = "";
         } else if (text === "=") {
-          let result = eval(displayValue);
+          equation = displayEquation;
+          let result = eval(displayEquation);
           if (result > 10000000) {
-            displayValue = result.toExponential();
-            display.style.justifyContent = "flex-end";
-            display.style.alignItems = "flex-end";
+            resultValue = result.toExponential();
           } else {
-            displayValue = Math.round(result * 1e10) / 1e10;
-            display.style.justifyContent = "flex-end";
-            display.style.alignItems = "flex-end";
+            resultValue = Math.round(result * 1e10) / 1e10;
           }
+          displayResult = resultValue;
         } else if (text === "√") {
-          displayValue = Math.sqrt(Number(displayValue));
+          equation = `√(${displayEquation})`;
+          resultValue = Math.sqrt(Number(displayEquation));
         } else if (text === "%") {
-          displayValue = Number(displayValue) / 100;
+          equation = `(${displayEquation}) / 100`;
+          resultValue = Number(displayEquation) / 100;
         } else {
-          displayValue += text;
+          equation += text;
+          displayEquation += text;
         }
-        console.log(`${text} clicked`);
-        display.innerHTML = displayValue;
+        display.innerHTML =
+          displayEquation +
+          "<br>" +
+          "<span class='result'>" +
+          displayResult +
+          "</span>";
       });
       div.appendChild(button);
     });
