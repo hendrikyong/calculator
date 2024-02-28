@@ -45,11 +45,16 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (text === "√") {
           //here
           equation = `Math.sqrt(${displayEquation})`;
-          resultValue = Math.sqrt(Number(displayEquation));
+          resultValue = Math.sqrt(displayEquation);
+          displayEquation = "√" + displayEquation;
+          displayResult = resultValue;
         } else if (text === "%") {
           //here
           equation = `(${displayEquation}) / 100`;
+          console.log(equation);
           resultValue = Number(displayEquation) / 100;
+          console.log(resultValue);
+          displayResult = resultValue;
         } else {
           equation += text;
           displayEquation += text;
