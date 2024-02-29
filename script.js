@@ -43,17 +43,14 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           displayResult = resultValue;
         } else if (text === "√") {
-          //here
-          equation = `Math.sqrt(${displayEquation})`;
-          resultValue = Math.sqrt(displayEquation);
+          equation += "Math.sqrt(" + displayEquation + ")";
+          resultValue = Math.sqrt(eval(displayEquation));
           displayEquation = "√" + displayEquation;
           displayResult = resultValue;
         } else if (text === "%") {
-          //here
-          equation = `(${displayEquation}) / 100`;
-          console.log(equation);
-          resultValue = Number(displayEquation) / 100;
-          console.log(resultValue);
+          equation += `(${displayEquation}) / 100`;
+          resultValue = eval(displayEquation) / 100;
+          displayEquation = displayEquation + "%";
           displayResult = resultValue;
         } else {
           equation += text;
