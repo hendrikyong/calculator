@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const buttonsContainer = document.querySelector(".buttons");
-  let displayEquation = ""; // Variable to store the equation
-  let displayResult = ""; // Variable to store the result
   let equation = "";
-  let resultValue = ""; // Variable to store the calculated result
+  let result = "";
   const display = document.getElementById("display");
   //create rows
   for (let i = 1; i < 6; i++) {
@@ -29,41 +27,44 @@ document.addEventListener("DOMContentLoaded", function () {
       button.classList.add("btn", "btn-secondary", "m-1");
       button.addEventListener("click", () => {
         if (text === "clear") {
-          equation = "";
-          displayEquation = "";
-          displayResult = "";
-          resultValue = "";
+          clear();
         } else if (text === "=") {
-          equation = displayEquation;
-          let result = eval(displayEquation);
-          if (result > 10000000) {
-            resultValue = result.toExponential();
-          } else {
-            resultValue = Math.round(result * 1e10) / 1e10;
-          }
-          displayResult = resultValue;
+          evaluate();
         } else if (text === "√") {
-          equation += "Math.sqrt(" + displayEquation + ")";
-          resultValue = Math.sqrt(eval(displayEquation));
-          displayEquation = "√" + displayEquation;
-          displayResult = resultValue;
+          sqrt();
         } else if (text === "%") {
-          equation += `(${displayEquation}) / 100`;
-          resultValue = eval(displayEquation) / 100;
-          displayEquation = displayEquation + "%";
-          displayResult = resultValue;
+          percent();
         } else {
           equation += text;
-          displayEquation += text;
+          console.log("input", equation);
         }
         display.innerHTML =
-          displayEquation +
-          "<br>" +
-          "<span class='result'>" +
-          displayResult +
-          "</span>";
+          equation + "<br>" + "<span class='result'>" + result + "</span>";
       });
       div.appendChild(button);
     });
   });
+  function clear() {
+    console.log("clear clicked");
+    equation = "";
+    result = "";
+  }
+  function evaluate() {
+    console.log("= clicked");
+    result = eval(equation);
+    console.log(result);
+  }
+  function sqrt() {
+    result = Math.sqrt(equation);
+    equation = "√" + equation;
+    console.log("res", result);
+    console.log("eqn", equation);
+    result = parseFloat(result.toFixed(7));
+  }
+  function percent() {
+    equation = parseFloat(equation);
+    result = equation / 100;
+    equation += "%";
+    console.log(result);
+  }
 });
