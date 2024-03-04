@@ -3,12 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
   let equation = "";
   let result = "";
   const display = document.getElementById("display");
+
   //create rows
   for (let i = 1; i < 6; i++) {
     const div = document.createElement("div");
     div.classList.add(`buttons-row${i}`);
     buttonsContainer.appendChild(div);
   }
+
   const items = [
     ["clear", "%", "√", "/"],
     ["7", "8", "9", "*"],
@@ -16,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["1", "2", "3", "+"],
     ["0", ".", "="],
   ];
+
   items.forEach((item, index) => {
     const div = document.querySelector(`.buttons-row${index + 1}`);
     item.forEach((text) => {
@@ -25,19 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
       button.classList.add("btn", "btn-secondary", "m-1");
       button.addEventListener("click", () => {
         if (text === "clear") {
-          equation = "";
-          result = "";
+          clear();
         } else if (text === "=") {
-          result = eval(equation);
-          if (result > 10000000) {
-            result = result.toExponential();
-          } else {
-            result = parseFloat(result.toFixed(7));
-          }
-          console.log(result); //test okay 8,9 + - * /
+          evaluate();
         } else if (text === "√") {
-          //but how do i allow like continue to do operations ? as of right now this code only allows for
-          // returning the result of a sqrt number
           const number = parseFloat(equation);
           if (!isNaN(number)) {
             result = Math.sqrt(number);
@@ -49,12 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
             equation = "√" + equation;
           }
         } else if (text === "%") {
-          //same thing here as the sqrt
           let number = parseFloat(equation);
-          console.log("num", number);
-          console.log("eqn", equation);
           result = number / 100;
-          console.log("res", result);
         } else {
           equation += text;
         }
@@ -64,4 +54,86 @@ document.addEventListener("DOMContentLoaded", function () {
       div.appendChild(button);
     });
   });
+
+  function clear() {
+    equation = "";
+    result = "";
+  }
+
+  function evaluate() {
+    const postfix = infixToPostfix(equation);
+    result = evaluatePostfix(postfix);
+  }
+
+  function infixToPostfix(infix) {
+    const precedence = {
+      "+": 0,
+      "-": 0,
+      "*": 1,
+      "/": 1,
+    };
+    let outputQueue = [];
+    let operatorStack = [];
+    let token = "";
+
+    for (let i = 0; i < infix.length; i++) {
+      const char = infix[i];
+
+      if (!isNaN(char) || char === ".") {
+        token += char;
+      } else if (char in precedence) {
+        if (token !== "") {
+          outputQueue.push(token);
+          token = "";
+        }
+        while (
+          operatorStack.length > 0 &&
+          precedence[operatorStack[operatorStack.length - 1]] >=
+            precedence[char]
+        ) {
+          outputQueue.push(operatorStack.pop());
+        }
+        operatorStack.push(char);
+      }
+    }
+
+    if (token !== "") {
+      outputQueue.push(token);
+    }
+
+    while (operatorStack.length > 0) {
+      outputQueue.push(operatorStack.pop());
+    }
+
+    return outputQueue; // Return the array of tokens, not joined string
+  }
+
+  function evaluatePostfix(postfix) {
+    const stack = [];
+
+    postfix.forEach((token) => {
+      if (!isNaN(parseFloat(token))) {
+        stack.push(parseFloat(token));
+      } else {
+        const b = stack.pop();
+        const a = stack.pop();
+        switch (token) {
+          case "+":
+            stack.push(a + b);
+            break;
+          case "-":
+            stack.push(a - b);
+            break;
+          case "*":
+            stack.push(a * b);
+            break;
+          case "/":
+            stack.push(a / b);
+            break;
+        }
+      }
+    });
+
+    return stack.pop();
+  }
 });
