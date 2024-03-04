@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     div.classList.add(`buttons-row${i}`);
     buttonsContainer.appendChild(div);
   }
-
   const items = [
     ["clear", "%", "√", "/"],
     ["7", "8", "9", "*"],
@@ -17,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ["1", "2", "3", "+"],
     ["0", ".", "="],
   ];
-
   items.forEach((item, index) => {
     const div = document.querySelector(`.buttons-row${index + 1}`);
     item.forEach((text) => {
@@ -27,16 +25,38 @@ document.addEventListener("DOMContentLoaded", function () {
       button.classList.add("btn", "btn-secondary", "m-1");
       button.addEventListener("click", () => {
         if (text === "clear") {
-          clear();
+          equation = "";
+          result = "";
         } else if (text === "=") {
-          evaluate();
+          result = eval(equation);
+          if (result > 10000000) {
+            result = result.toExponential();
+          } else {
+            result = parseFloat(result.toFixed(7));
+          }
+          console.log(result); //test okay 8,9 + - * /
         } else if (text === "√") {
-          sqrt();
+          //but how do i allow like continue to do operations ? as of right now this code only allows for
+          // returning the result of a sqrt number
+          const number = parseFloat(equation);
+          if (!isNaN(number)) {
+            result = Math.sqrt(number);
+            if (Number.isInteger(result)) {
+              result = result.toFixed(0); //for whole like sqrt 9
+            } else {
+              result = result.toFixed(7); //limit 7 dp
+            }
+            equation = "√" + equation;
+          }
         } else if (text === "%") {
-          percent();
+          //same thing here as the sqrt
+          let number = parseFloat(equation);
+          console.log("num", number);
+          console.log("eqn", equation);
+          result = number / 100;
+          console.log("res", result);
         } else {
           equation += text;
-          console.log("input", equation);
         }
         display.innerHTML =
           equation + "<br>" + "<span class='result'>" + result + "</span>";
@@ -44,27 +64,4 @@ document.addEventListener("DOMContentLoaded", function () {
       div.appendChild(button);
     });
   });
-  function clear() {
-    console.log("clear clicked");
-    equation = "";
-    result = "";
-  }
-  function evaluate() {
-    console.log("= clicked");
-    result = eval(equation);
-    console.log(result);
-  }
-  function sqrt() {
-    result = Math.sqrt(equation);
-    equation = "√" + equation;
-    console.log("res", result);
-    console.log("eqn", equation);
-    result = parseFloat(result.toFixed(7));
-  }
-  function percent() {
-    equation = parseFloat(equation);
-    result = equation / 100;
-    equation += "%";
-    console.log(result);
-  }
 });
