@@ -81,10 +81,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (equation.includes("√")) {
       console.log("this eqn got sqrt");
       equation = equation.split(/[\+\-\*\/]/); //use regex to split if theres add operations
-      console.log(equation);
+      console.log("this", equation);
+      // prob need to use another name to store for the splitting then can join back again ?
       // now split accordingly already and then i need to evaluate it probably need to worry about podmas
     } else if (equation.includes("%")) {
       console.log("this eqn got percent");
+      equation = equation.split(/[\+\-\*\/]/); //use regex to split if theres add operations
+      console.log(equation);
     } else {
       result = eval(equation);
     }
