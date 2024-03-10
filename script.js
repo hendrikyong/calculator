@@ -27,24 +27,21 @@ document.addEventListener("DOMContentLoaded", function () {
       button.textContent = text;
       button.classList.add("btn", "btn-secondary", "m-1");
       button.addEventListener("click", () => {
+        console.log(text); //logs each click
         if (text === "clear") {
           clear();
+          // console.log("clear function works");
         } else if (text === "=") {
+          //here needs to evaluate
           evaluate();
         } else if (text === "√") {
-          const number = parseFloat(equation);
-          if (!isNaN(number)) {
-            result = Math.sqrt(number);
-            if (Number.isInteger(result)) {
-              result = result.toFixed(0); //for whole like sqrt 9
-            } else {
-              result = result.toFixed(7); //limit 7 dp
-            }
-            equation = "√" + equation;
-          }
+          //sqrt funct
+          sqrt();
+          // console.log(result);
         } else if (text === "%") {
-          let number = parseFloat(equation);
-          result = number / 100;
+          //percent funct
+          percent();
+          // console.log(result);
         } else {
           equation += text;
         }
@@ -60,80 +57,36 @@ document.addEventListener("DOMContentLoaded", function () {
     result = "";
   }
 
-  function evaluate() {
-    const postfix = infixToPostfix(equation);
-    result = evaluatePostfix(postfix);
-  }
-
-  function infixToPostfix(infix) {
-    const precedence = {
-      "+": 0,
-      "-": 0,
-      "*": 1,
-      "/": 1,
-    };
-    let outputQueue = [];
-    let operatorStack = [];
-    let token = "";
-
-    for (let i = 0; i < infix.length; i++) {
-      const char = infix[i];
-
-      if (!isNaN(char) || char === ".") {
-        token += char;
-      } else if (char in precedence) {
-        if (token !== "") {
-          outputQueue.push(token);
-          token = "";
-        }
-        while (
-          operatorStack.length > 0 &&
-          precedence[operatorStack[operatorStack.length - 1]] >=
-            precedence[char]
-        ) {
-          outputQueue.push(operatorStack.pop());
-        }
-        operatorStack.push(char);
-      }
-    }
-
-    if (token !== "") {
-      outputQueue.push(token);
-    }
-
-    while (operatorStack.length > 0) {
-      outputQueue.push(operatorStack.pop());
-    }
-
-    return outputQueue; // Return the array of tokens, not joined string
-  }
-
-  function evaluatePostfix(postfix) {
-    const stack = [];
-
-    postfix.forEach((token) => {
-      if (!isNaN(parseFloat(token))) {
-        stack.push(parseFloat(token));
+  function sqrt() {
+    const number = parseFloat(equation);
+    if (!isNaN(number)) {
+      //check if number is a number
+      result = Math.sqrt(number);
+      if (Number.isInteger(result)) {
+        result = result.toFixed(0); //for whole like sqrt 9
       } else {
-        const b = stack.pop();
-        const a = stack.pop();
-        switch (token) {
-          case "+":
-            stack.push(a + b);
-            break;
-          case "-":
-            stack.push(a - b);
-            break;
-          case "*":
-            stack.push(a * b);
-            break;
-          case "/":
-            stack.push(a / b);
-            break;
-        }
+        result = result.toFixed(6); //limit 6 dp
       }
-    });
+      equation = "√" + equation;
+    }
+  }
 
-    return stack.pop();
+  function percent() {
+    result = parseFloat(equation) / 100;
+    equation = equation + "%";
+  }
+
+  function evaluate() {
+    console.log("eqn", equation);
+    if (equation.includes("√")) {
+      console.log("this eqn got sqrt");
+      equation = equation.split(/[\+\-\*\/]/); //use regex to split if theres add operations
+      console.log(equation);
+      // now split accordingly already and then i need to evaluate it probably need to worry about podmas
+    } else if (equation.includes("%")) {
+      console.log("this eqn got percent");
+    } else {
+      result = eval(equation);
+    }
   }
 });
