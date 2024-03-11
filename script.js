@@ -77,19 +77,35 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function evaluate() {
-    console.log("eqn", equation);
     if (equation.includes("√")) {
+      console.log("eqn", equation);
       console.log("this eqn got sqrt");
-      equation = equation.split(/[\+\-\*\/]/); //use regex to split if theres add operations
-      console.log("this", equation);
-      // prob need to use another name to store for the splitting then can join back again ?
-      // now split accordingly already and then i need to evaluate it probably need to worry about podmas
+      //split equation
+      let parts = equation.split(/([\+\-\*\/])/);
+
+      //find sqrt
+      for (let i = 0; i < parts.length; i++) {
+        if (parts[i].includes("√")) {
+          let operand = parseFloat(
+            parts[i].substring(parts[i].indexOf("√") + 1)
+          );
+          let sqrtResult = Math.sqrt(operand);
+          parts[i] = sqrtResult.toString();
+        }
+      }
+      //rejoin
+      let modifiedEquation = parts.join("");
+
+      //evaluate
+      result = eval(modifiedEquation);
+      console.log("Result:", result);
     } else if (equation.includes("%")) {
       console.log("this eqn got percent");
-      equation = equation.split(/[\+\-\*\/]/); //use regex to split if theres add operations
-      console.log(equation);
+      //percent here
     } else {
+      //else just evaluate
       result = eval(equation);
+      console.log("Result:", result);
     }
   }
 });
