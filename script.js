@@ -27,21 +27,12 @@ document.addEventListener("DOMContentLoaded", function () {
       button.textContent = text;
       button.classList.add("btn", "btn-secondary", "m-1");
       button.addEventListener("click", () => {
-        console.log(text); //logs each click
+        console.log("text", text); //logs each click
         if (text === "clear") {
           clear();
-          // console.log("clear function works");
         } else if (text === "=") {
           //here needs to evaluate
           evaluate();
-        } else if (text === "√") {
-          //sqrt funct
-          sqrt();
-          // console.log(result);
-        } else if (text === "%") {
-          //percent funct
-          percent();
-          // console.log(result);
         } else {
           equation += text;
         }
@@ -57,20 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
     result = "";
   }
 
-  function sqrt() {
-    const number = parseFloat(equation);
-    if (!isNaN(number)) {
-      //check if number is a number
-      result = Math.sqrt(number);
-      if (Number.isInteger(result)) {
-        result = result.toFixed(0); //for whole like sqrt 9
-      } else {
-        result = result.toFixed(6); //limit 6 dp
-      }
-      equation = "√" + equation;
-    }
-  }
-
   function percent() {
     result = parseFloat(equation) / 100;
     equation = equation + "%";
@@ -79,24 +56,29 @@ document.addEventListener("DOMContentLoaded", function () {
   function evaluate() {
     if (equation.includes("√")) {
       console.log("eqn", equation);
-      console.log("this eqn got sqrt");
+
       //split equation
       let parts = equation.split(/([\+\-\*\/])/);
-
+      console.log("part1", parts);
       //find sqrt
       for (let i = 0; i < parts.length; i++) {
         if (parts[i].includes("√")) {
+          //get number inside sqrt
           let operand = parseFloat(
             parts[i].substring(parts[i].indexOf("√") + 1)
           );
+          console.log("operand", operand);
           let sqrtResult = Math.sqrt(operand);
           parts[i] = sqrtResult.toString();
         }
       }
       //rejoin
       let modifiedEquation = parts.join("");
+      //here got issue need to handle the sqrt is applied to the first number
+      //i did 6 * sqrt 9 but it gives me sqrt6 * 9
+      console.log(modifiedEquation);
 
-      //evaluate
+      //evaluate need to do rounding
       result = eval(modifiedEquation);
       console.log("Result:", result);
     } else if (equation.includes("%")) {
