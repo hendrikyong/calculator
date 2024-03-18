@@ -48,11 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
     result = "";
   }
 
-  function percent() {
-    result = parseFloat(equation) / 100;
-    equation = equation + "%";
-  }
-
   function evaluate() {
     if (equation.includes("√")) {
       console.log("eqn", equation);
@@ -110,6 +105,11 @@ document.addEventListener("DOMContentLoaded", function () {
       //else just evaluate
       result = eval(equation);
       console.log("Result:", result);
+    }
+    if (!isFinite(result)) {
+      result = "Math Error";
+    } else {
+      result = Number.isInteger(result) ? result : result.toFixed(6);
     }
   }
 });
