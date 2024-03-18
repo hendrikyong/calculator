@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function evaluate() {
     if (equation.includes("√")) {
       console.log("eqn", equation);
-
       //split equation
       let parts = equation.split(/([\+\-\*\/])/);
       console.log("part1", parts);
@@ -74,16 +73,39 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       //rejoin
       let modifiedEquation = parts.join("");
-      //here got issue need to handle the sqrt is applied to the first number
-      //i did 6 * sqrt 9 but it gives me sqrt6 * 9
       console.log(modifiedEquation);
 
       //evaluate need to do rounding
       result = eval(modifiedEquation);
+      if (result % 1 === 0) {
+        //if whole
+        result = result.toFixed(0);
+      } else {
+        //if not whole
+        result = result.toFixed(6);
+      }
       console.log("Result:", result);
     } else if (equation.includes("%")) {
-      console.log("this eqn got percent");
-      //percent here
+      console.log("eqn", equation);
+      let parts = equation.split(/([\+\-\*\/])/);
+      console.log("part1", parts);
+
+      //find pct
+      for (let i = 0; i < parts.length; i++) {
+        if (parts[i].includes("%")) {
+          let operand = parseFloat(parts[i]);
+          console.log("operand", operand);
+          let pctDecimal = operand / 100;
+          console.log("pctDecimal", pctDecimal);
+          parts[i] = pctDecimal.toString();
+        }
+      }
+
+      let modifiedEquation = parts.join("");
+      console.log("modEqn", modifiedEquation);
+      result = eval(modifiedEquation);
+      result = Math.round(result * 100) / 100;
+      console.log(result);
     } else {
       //else just evaluate
       result = eval(equation);
