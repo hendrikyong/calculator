@@ -109,7 +109,17 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!isFinite(result)) {
       result = "Math Error";
     } else {
-      result = Number.isInteger(result) ? result : result.toFixed(6);
+      result = Number.isInteger(parseFloat(result))
+        ? result
+        : parseFloat(result).toFixed(5);
     }
+    equalsClicked();
+  }
+
+  function equalsClicked() {
+    console.log("equals clicked");
+    let newResult = result;
+    console.log("new res", newResult);
+    //this function needs to handle additional operations after = is clicked so that the result can be accurate
   }
 });
