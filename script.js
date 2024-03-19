@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
       button.textContent = text;
       button.classList.add("btn", "btn-secondary", "m-1");
       button.addEventListener("click", () => {
-        console.log("text", text); //logs each click
         if (text === "clear") {
           clear();
         } else if (text === "=") {
@@ -50,10 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function evaluate() {
     if (equation.includes("√")) {
-      console.log("eqn", equation);
       //split equation
       let parts = equation.split(/([\+\-\*\/])/);
-      console.log("part1", parts);
       //find sqrt
       for (let i = 0; i < parts.length; i++) {
         if (parts[i].includes("√")) {
@@ -61,16 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
           let operand = parseFloat(
             parts[i].substring(parts[i].indexOf("√") + 1)
           );
-          console.log("operand", operand);
           let sqrtResult = Math.sqrt(operand);
           parts[i] = sqrtResult.toString();
         }
       }
       //rejoin
       let modifiedEquation = parts.join("");
-      console.log(modifiedEquation);
 
-      //evaluate need to do rounding
       result = eval(modifiedEquation);
       if (result % 1 === 0) {
         //if whole
@@ -79,12 +73,8 @@ document.addEventListener("DOMContentLoaded", function () {
         //if not whole
         result = result.toFixed(6);
       }
-      console.log("Result:", result);
     } else if (equation.includes("%")) {
-      console.log("eqn", equation);
       let parts = equation.split(/([\+\-\*\/])/);
-      console.log("part1", parts);
-
       //find pct
       for (let i = 0; i < parts.length; i++) {
         if (parts[i].includes("%")) {
@@ -97,14 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       let modifiedEquation = parts.join("");
-      console.log("modEqn", modifiedEquation);
       result = eval(modifiedEquation);
       result = Math.round(result * 100) / 100;
-      console.log(result);
     } else {
       //else just evaluate
       result = eval(equation);
-      console.log("Result:", result);
     }
     if (!isFinite(result)) {
       result = "Math Error";
@@ -113,13 +100,5 @@ document.addEventListener("DOMContentLoaded", function () {
         ? result
         : parseFloat(result).toFixed(5);
     }
-    equalsClicked();
-  }
-
-  function equalsClicked() {
-    console.log("equals clicked");
-    let newResult = result;
-    console.log("new res", newResult);
-    //this function needs to handle additional operations after = is clicked so that the result can be accurate
   }
 });
