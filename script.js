@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
       button.textContent = text;
       button.classList.add("btn", "btn-secondary", "m-1");
       button.addEventListener("click", () => {
+        // console.log("text", text); //logs each click
         if (text === "clear") {
           clear();
         } else if (text === "=") {
@@ -49,8 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function evaluate() {
     if (equation.includes("√")) {
+      console.log("eqn", equation);
       //split equation
       let parts = equation.split(/([\+\-\*\/])/);
+      console.log("part1", parts);
       //find sqrt
       for (let i = 0; i < parts.length; i++) {
         if (parts[i].includes("√")) {
@@ -58,13 +61,16 @@ document.addEventListener("DOMContentLoaded", function () {
           let operand = parseFloat(
             parts[i].substring(parts[i].indexOf("√") + 1)
           );
+          console.log("operand", operand);
           let sqrtResult = Math.sqrt(operand);
           parts[i] = sqrtResult.toString();
         }
       }
       //rejoin
       let modifiedEquation = parts.join("");
+      console.log(modifiedEquation);
 
+      //evaluate need to do rounding
       result = eval(modifiedEquation);
       if (result % 1 === 0) {
         //if whole
@@ -73,8 +79,12 @@ document.addEventListener("DOMContentLoaded", function () {
         //if not whole
         result = result.toFixed(6);
       }
+      console.log("Result:", result);
     } else if (equation.includes("%")) {
+      console.log("eqn", equation);
       let parts = equation.split(/([\+\-\*\/])/);
+      console.log("part1", parts);
+
       //find pct
       for (let i = 0; i < parts.length; i++) {
         if (parts[i].includes("%")) {
@@ -87,11 +97,14 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       let modifiedEquation = parts.join("");
+      console.log("modEqn", modifiedEquation);
       result = eval(modifiedEquation);
       result = Math.round(result * 100) / 100;
+      console.log(result);
     } else {
       //else just evaluate
       result = eval(equation);
+      console.log("Result:", result);
     }
     if (!isFinite(result)) {
       result = "Math Error";
@@ -100,5 +113,42 @@ document.addEventListener("DOMContentLoaded", function () {
         ? result
         : parseFloat(result).toFixed(5);
     }
+    //--------------CODE ABOVE IS GOOD DO NOT DELETE THIS COMMENT UNTIL DONE---------------
+    //adding code to help further calculation rather than reevaluating the whole line
+    //.buttons-row5 button:nth-child(3) targets = button
+    //have to calculate further by storing result in new eqn and then eval new eqn and see whats up
+    let addOp = "";
+    let modifiedEqn = "";
+    let newResult = eval(modifiedEqn);
+    document.querySelectorAll(".buttons button").forEach((button) => {
+      button.addEventListener("click", function () {
+        // newEqn += this.textContent.trim(); //what does this line do?
+        // console.log("new Eqn", newEqn);
+        console.log("text con", this.textContent);
+        if (this.textContent !== "=") {
+          addOp += this.textContent;
+          console.log("add op", addOp);
+          modifiedEqn = result + addOp;
+          console.log("mod eqn", modifiedEqn);
+          console.log("res", result);
+          newResult = eval(modifiedEqn); //i did get 13.5 on console.log but this line error
+          console.log("new res", newResult);
+        } else {
+          console.log("= hit");
+        }
+      });
+    });
+
+    //this one is for when = clicked and any operations aft that then calculate further rather than reevaluate the
+    //whole eqn again
+    // document
+    //   .querySelector(".buttons-row5 button:nth-child(3)")
+    //   .addEventListener("click", function () {
+    //     console.log("yes this line = clicked");
+    //     console.log("new eqn", newEqn);
+    //     let newResult = eval(newEqn);
+    //     console.log("new Eqn", newEqn);
+    //     console.log("res", newResult);
+    //   });
   }
 });
