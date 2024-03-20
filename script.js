@@ -122,33 +122,22 @@ document.addEventListener("DOMContentLoaded", function () {
     let newResult = eval(modifiedEqn);
     document.querySelectorAll(".buttons button").forEach((button) => {
       button.addEventListener("click", function () {
-        // newEqn += this.textContent.trim(); //what does this line do?
-        // console.log("new Eqn", newEqn);
         console.log("text con", this.textContent);
         if (this.textContent !== "=") {
           addOp += this.textContent;
           console.log("add op", addOp);
           modifiedEqn = result + addOp;
           console.log("mod eqn", modifiedEqn);
-          console.log("res", result);
           newResult = eval(modifiedEqn); //i did get 13.5 on console.log but this line error
           console.log("new res", newResult);
-        } else {
-          console.log("= hit");
+          result = newResult;
+          display.innerHTML =
+            equation + "<br>" + "<span class='result'>" + newResult + "</span>"; // Update the display
         }
       });
     });
 
     //this one is for when = clicked and any operations aft that then calculate further rather than reevaluate the
     //whole eqn again
-    // document
-    //   .querySelector(".buttons-row5 button:nth-child(3)")
-    //   .addEventListener("click", function () {
-    //     console.log("yes this line = clicked");
-    //     console.log("new eqn", newEqn);
-    //     let newResult = eval(newEqn);
-    //     console.log("new Eqn", newEqn);
-    //     console.log("res", newResult);
-    //   });
   }
 });
