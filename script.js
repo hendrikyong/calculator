@@ -57,7 +57,22 @@ document.addEventListener("DOMContentLoaded", function () {
       //any special characters in them
       //but i still need to check that if equals have been pressed
       //use newEqn to store prev res + add ops then eval and store res in new res
+      //temp
+      result = eval(equation);
     }
+  }
+
+  function evaluateEqualsPressed() {
+    const equalsButton = document.querySelector(
+      ".buttons-row5 button:nth-child(3)"
+    );
+    equalsButton.addEventListener("click", function () {
+      console.log("second = clicked", this.textContent); //on second = click
+      newEqn = result;
+      console.log("new eqn", newEqn);
+      let parts = equation.split(/([\+\-\*\/])/);
+      //console.log("parts", parts);
+    });
   }
 
   //create rows to store buttons
@@ -100,4 +115,13 @@ document.addEventListener("DOMContentLoaded", function () {
       div.appendChild(button);
     });
   });
+
+  const equals = document.querySelector(".buttons-row5 button:nth-child(3)");
+  if (equals) {
+    equals.addEventListener("click", function () {
+      console.log("first = click");
+      isEqualsPressed = true;
+      evaluateEqualsPressed();
+    });
+  }
 });
