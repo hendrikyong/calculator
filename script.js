@@ -1,22 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const buttonsContainer = document.querySelector(".buttons");
+  const buttonContainer = document.querySelector(".buttons");
   const display = document.getElementById("display");
+  //declare variables
   let equation = "";
   let result = "";
+  let isEqualsPressed = false; //to track if equals has been pressed if yes then
+  //need to use further calc with old res + new operations to derive new result
+  let newEqn = ""; //for when there is further calculations (not to store the neweqn its to help to derive the new res)
+  let newResult = ""; //to track the new result when there is further calculations
 
-  //clear function
   function clear() {
     equation = "";
     result = "";
+    isEqualsPressed = false;
   }
 
   function evaluate() {
     if (equation.includes("√")) {
       console.log("eqn", equation);
-      //split equation
       let parts = equation.split(/([\+\-\*\/])/);
-      console.log("part1", parts);
-      //find sqrt
+      console.log("parts", parts);
       for (let i = 0; i < parts.length; i++) {
         if (parts[i].includes("√")) {
           //get number inside sqrt
@@ -25,29 +28,16 @@ document.addEventListener("DOMContentLoaded", function () {
           );
           console.log("operand", operand);
           let sqrtResult = Math.sqrt(operand);
+          //change parts[i] to string and rejoin eqn to evaluate
           parts[i] = sqrtResult.toString();
         }
       }
-      //rejoin
       let modifiedEquation = parts.join("");
-      console.log(modifiedEquation);
-
-      //evaluate need to do rounding
       result = eval(modifiedEquation);
-      if (result % 1 === 0) {
-        //if whole
-        result = result.toFixed(0);
-      } else {
-        //if not whole
-        result = result.toFixed(6);
-      }
-      console.log("Result:", result);
     } else if (equation.includes("%")) {
       console.log("eqn", equation);
       let parts = equation.split(/([\+\-\*\/])/);
-      console.log("part1", parts);
-
-      //find pct
+      console.log("parts", parts);
       for (let i = 0; i < parts.length; i++) {
         if (parts[i].includes("%")) {
           let operand = parseFloat(parts[i]);
@@ -57,34 +47,27 @@ document.addEventListener("DOMContentLoaded", function () {
           parts[i] = pctDecimal.toString();
         }
       }
-
       let modifiedEquation = parts.join("");
       console.log("modEqn", modifiedEquation);
       result = eval(modifiedEquation);
       result = Math.round(result * 100) / 100;
       console.log(result);
     } else {
-      //else just evaluate
-      result = eval(equation);
-      console.log("Result:", result);
-    }
-    if (!isFinite(result)) {
-      result = "Math Error";
-    } else {
-      result = Number.isInteger(parseFloat(result))
-        ? result
-        : parseFloat(result).toFixed(5);
+      //now that i have checked for sqrt and pct now is to evaluate those eqn without
+      //any special characters in them
+      //but i still need to check that if equals have been pressed
+      //use newEqn to store prev res + add ops then eval and store res in new res
     }
   }
 
-  //create buttons row and append them to buttonsContainter
-  for (let i = 1; i < 6; i++) {
+  //create rows to store buttons
+  for (let i = 1; i <= 6; i++) {
     const div = document.createElement("div");
     div.classList.add(`buttons-row${i}`);
-    buttonsContainer.appendChild(div);
+    buttonContainer.appendChild(div);
   }
 
-  //buttons
+  //button text
   const items = [
     ["clear", "%", "√", "/"],
     ["7", "8", "9", "*"],
@@ -93,19 +76,20 @@ document.addEventListener("DOMContentLoaded", function () {
     ["0", ".", "="],
   ];
 
-  items.forEach((item, index) => {
+  items.forEach((items, index) => {
     const div = document.querySelector(`.buttons-row${index + 1}`);
-    item.forEach((text) => {
+    items.forEach((text) => {
       //create button
       const button = document.createElement("button");
       button.textContent = text;
       button.classList.add("btn", "btn-secondary", "m-1");
       button.addEventListener("click", () => {
-        console.log("text", text); //logs each click
+        //logs button clicks
+        //console.log(button.textContent);
         if (text === "clear") {
           clear();
         } else if (text === "=") {
-          //here needs to evaluate
+          //if the button clicked is = i need to evaluate the equation
           evaluate();
         } else {
           equation += text;
