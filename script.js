@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //need to use further calc with old res + new operations to derive new result
   let newEqn = ""; //for when there is further calculations (not to store the neweqn its to help to derive the new res)
   let newResult = ""; //to track the new result when there is further calculations
+  let addOp = ""; //if there is additional operations to craft new eqn
 
   function clear() {
     equation = "";
@@ -103,26 +104,30 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  //test case 5*5+2 = 27 /2 = 13.5
   const equals = document.querySelector(".buttons-row5 button:nth-child(3)");
   if (equals) {
     equals.addEventListener("click", function () {
       console.log("first = click");
       isEqualsPressed = true;
       if (result >= 0) {
-        newEqn = result; // + add op;
         //find a way to track add op aft that add that shit to new eqn once done then evaluate
         //turn this whole thing into a function and then use if else at the else block of evaluate
-        console.log("new Eqn", newEqn);
         document.querySelectorAll(".buttons button").forEach((button) => {
           button.addEventListener("click", function () {
-            console.log("text content", this.textContent);
-            let addOp = "";
+            //console.log("text content", this.textContent);
             if (this.textContent !== "=") {
               //then add it to add op
               //after that craft newEqn and then eval
               addOp += this.textContent;
               console.log("add op", addOp);
             }
+            newEqn = result + addOp;
+            console.log("new eqn", newEqn);
+            newResult = eval(newEqn);
+            console.log("res", result);
+            console.log("new res", newResult);
+            result = newResult;
           });
         });
       }
