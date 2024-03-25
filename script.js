@@ -62,19 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function evaluateEqualsPressed() {
-    const equalsButton = document.querySelector(
-      ".buttons-row5 button:nth-child(3)"
-    );
-    equalsButton.addEventListener("click", function () {
-      console.log("second = clicked", this.textContent); //on second = click
-      newEqn = result;
-      console.log("new eqn", newEqn);
-      let parts = equation.split(/([\+\-\*\/])/);
-      //console.log("parts", parts);
-    });
-  }
-
   //create rows to store buttons
   for (let i = 1; i <= 6; i++) {
     const div = document.createElement("div");
@@ -121,7 +108,24 @@ document.addEventListener("DOMContentLoaded", function () {
     equals.addEventListener("click", function () {
       console.log("first = click");
       isEqualsPressed = true;
-      evaluateEqualsPressed();
+      if (result >= 0) {
+        newEqn = result; // + add op;
+        //find a way to track add op aft that add that shit to new eqn once done then evaluate
+        //turn this whole thing into a function and then use if else at the else block of evaluate
+        console.log("new Eqn", newEqn);
+        document.querySelectorAll(".buttons button").forEach((button) => {
+          button.addEventListener("click", function () {
+            console.log("text content", this.textContent);
+            let addOp = "";
+            if (this.textContent !== "=") {
+              //then add it to add op
+              //after that craft newEqn and then eval
+              addOp += this.textContent;
+              console.log("add op", addOp);
+            }
+          });
+        });
+      }
     });
   }
 });
