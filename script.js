@@ -128,6 +128,9 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("res", result);
             console.log("new res", newResult);
             result = newResult;
+            console.log("res1", result);
+            display.innerHTML =
+              newEqn + "<br><span class='result'>" + result + "</span>";
           });
         });
       }
