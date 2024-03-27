@@ -111,26 +111,27 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("first = click");
       isEqualsPressed = true;
       if (result >= 0) {
+        //that means that equals has been hit and there was a prev operation already calculated
         //find a way to track add op aft that add that shit to new eqn once done then evaluate
         //turn this whole thing into a function and then use if else at the else block of evaluate
         document.querySelectorAll(".buttons button").forEach((button) => {
           button.addEventListener("click", function () {
-            //console.log("text content", this.textContent);
             if (this.textContent !== "=") {
               //then add it to add op
               //after that craft newEqn and then eval
               addOp += this.textContent;
               console.log("add op", addOp);
+              newEqn = result + addOp;
             }
-            newEqn = result + addOp;
-            console.log("new eqn", newEqn);
-            newResult = eval(newEqn);
             console.log("res", result);
+            console.log(equation);
+            console.log("new eqn", newEqn);
+            //newResult = eval("8+2");
+            //new eqn got some issue
+            newResult = eval(newEqn);
             console.log("new res", newResult);
-            result = newResult;
-            console.log("res1", result);
             display.innerHTML =
-              newEqn + "<br><span class='result'>" + result + "</span>";
+              newEqn + "<br>" + "<span class='result'>" + newResult + "</span>";
           });
         });
       }
