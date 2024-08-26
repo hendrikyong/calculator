@@ -23,7 +23,7 @@ function Calculator() {
             <Button label="2" />
             <Button label="3" />
             <Button label="+" />
-            <Button label="0" />
+            <Button label="0" className={styles.wideButton} />
             <Button label="." />
             <Button label="=" />
           </div>

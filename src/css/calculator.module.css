@@ -1,9 +1,9 @@
 .calcContainer {
   background-color: rgb(114, 114, 114);
-  border-radius: 32px;
+  border-radius: 8px;
   height: 600px;
   width: 350px;
-  padding: 20px;
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,12 +11,19 @@
 
 .calcScreen {
   height: 120px;
-  width: 100%;
+  width: 95%;
   background-color: rgb(93, 255, 0);
-  border-radius: 12px;
-  margin-bottom: 20px;
+  border-radius: 8px;
+  margin: 10px 0 20px 0;
 }
 
 .calcButtons {
-  border: red solid 3px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.wideButton {
+  grid-column: span 2;
 }
