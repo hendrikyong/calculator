@@ -15,6 +15,25 @@
   background-color: rgb(93, 255, 0);
   border-radius: 8px;
   margin: 10px 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.calcScreen > div {
+  padding: 5px 12px;
+}
+
+.eqn {
+  display: flex;
+  justify-content: left;
+  font-size: 32px;
+}
+
+.ans {
+  display: flex;
+  justify-content: right;
+  font-size: 32px;
 }
 
 .calcButtons {
