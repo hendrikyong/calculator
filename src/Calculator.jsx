@@ -9,18 +9,30 @@ function Calculator() {
   const [calculated, setCalculated] = useState(false);
 
   function handleButtonClick(label) {
-    setEquation((e) => e + label);
+    if (calculated) {
+      setEquation(label);
+      setCalculated(false);
+    } else {
+      setEquation((e) => e + label);
+    }
   }
 
   function handleArithmetic(label) {
-    setEquation((e) => e + label);
+    if (calculated) {
+      //If a calculation was just made, start a new equation with the answer and the operator
+      setEquation(answer + label);
+      setCalculated(false);
+    } else {
+      setEquation((e) => e + label);
+    }
   }
 
   function handleCalculate() {
     console.log("Calculate button clicked");
     try {
-      // i want to say check if answer has a value if there is any operations after the equals have been hit must be calculated with that value and not the equation
-      setAnswer(evaluate(equation));
+      const result = evaluate(equation);
+      setAnswer(result);
+      setCalculated(true);
     } catch (e) {
       setAnswer("Error");
     }
@@ -29,6 +41,7 @@ function Calculator() {
   function handleClear() {
     setEquation("");
     setAnswer("");
+    setCalculated(false);
   }
   return (
     <>
