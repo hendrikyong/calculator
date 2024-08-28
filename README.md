@@ -1,6 +1,6 @@
 # Calculator App
 
-This is a simple React-based calculator application that performs basic arithmetic operations and handles square roots. It uses the `mathjs` library to evaluate mathematical expressions and manages the state for user interactions.
+This is a simple React-based calculator application that performs basic arithmetic operations, handles square roots and percentages. It uses the `mathjs` library to evaluate mathematical expressions and manages the state for user interactions.
 
 ## Features
 
