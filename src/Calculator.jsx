@@ -28,10 +28,30 @@ function Calculator() {
   }
 
   function handleCalculate() {
-    console.log("Calculate button clicked");
     try {
-      const result = evaluate(equation);
-      setAnswer(result);
+      let modifiedEquation = equation;
+
+      // Handle square root
+      if (equation.includes("√")) {
+        // Replace √x with sqrt(x)
+        modifiedEquation = modifiedEquation.replace(
+          /√(\d+(\.\d+)?)/g,
+          (_, num) => {
+            return `sqrt(${num})`;
+          }
+        );
+      }
+
+      const result = evaluate(modifiedEquation);
+
+      // Check for division by zero
+      if (result === Infinity || result === -Infinity) {
+        setAnswer("Math Error");
+      } else {
+        const finalAns = Math.round(result * 100000) / 100000;
+        setAnswer(finalAns);
+      }
+
       setCalculated(true);
     } catch (e) {
       setAnswer("Error");
